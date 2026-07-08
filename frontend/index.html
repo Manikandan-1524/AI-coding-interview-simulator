@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Coding Interview Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Auth Box (shown when NOT logged in) -->
+  <section id="auth-box">
+    <h2 id="auth-title">Sign Up</h2>
+    <input type="text" id="username-input" placeholder="Username">
+    <input type="password" id="password-input" placeholder="Password">
+    <button id="auth-submit-btn">Sign Up</button>
+    <p id="auth-message"></p>
+    <p>
+      <span id="auth-toggle-text">Already have an account?</span>
+      <a href="#" id="auth-toggle-link">Log in</a>
+    </p>
+  </section>
+
+  <!-- Main App (shown AFTER logged in, hidden initially) -->
+  <div id="app-content" style="display:none;">
+
+    <header>
+      <h1>AI Coding Interview Simulator</h1>
+      <p>Practice coding interviews with instant AI feedback</p>
+    </header>
+
+    <section id="welcome-box">
+      <p>Welcome, <strong id="welcome-username"></strong>!</p>
+      <p>
+        <a href="#" id="history-link">My History</a> |
+        <a href="#" id="weak-areas-link">My Weak Areas</a> |
+        <a href="#" id="logout-link">Logout</a>
+      </p>
+    </section>
+
+    <!-- ===== PRACTICE VIEW (default view) ===== -->
+    <div id="practice-view">
+
+      <section id="topic-box">
+        <h2>Choose a Topic</h2>
+        <div id="topic-row">
+          <select id="topic-select">
+            <option value="arrays">Arrays</option>
+            <option value="strings">Strings</option>
+            <option value="loops">Loops</option>
+            <option value="recursion">Recursion</option>
+            <option value="sorting">Sorting</option>
+            <option value="searching">Searching</option>
+            <option value="math">Math</option>
+            <option value="matrix">2D Arrays / Matrix</option>
+            <option value="bitmanipulation">Bit Manipulation</option>
+          </select>
+          <button id="new-question-btn">Get New Question</button>
+        </div>
+      </section>
+
+      <div id="practice-grid">
+        <section id="question-box">
+          <div id="question-tags">
+            <span class="tag tag-practice">Practice</span>
+            <span class="tag tag-topic" id="tag-topic">Arrays</span>
+          </div>
+          <p id="question-text">Click "Get New Question" to start!</p>
+          <div id="signature-box">
+            <span id="signature-label">Method Signature</span>
+            <code id="method-signature"></code>
+          </div>
+        </section>
+
+        <section id="editor-box">
+          <div id="editor-toolbar">
+            <span>Java</span>
+          </div>
+          <div id="editor-wrapper">
+            <div id="line-numbers">1</div>
+            <textarea id="code-input" placeholder="Write your solution method here..." spellcheck="false"></textarea>
+          </div>
+          <button id="submit-btn">Submit Solution</button>
+        </section>
+      </div>
+
+      <section id="result-box">
+        <h2>Results</h2>
+        <div id="result-text">Submit your code to see results here.</div>
+      </section>
+
+      <!-- Interviewer only appears after a real submission -->
+      <section id="interviewer-box" style="display:none;">
+        <h2>🎙️ Interviewer Follow-Up</h2>
+        <p id="followup-question"></p>
+        <textarea id="followup-answer" placeholder="Type your answer here..." rows="4"></textarea>
+        <button id="followup-submit-btn">Submit Answer</button>
+        <p id="followup-feedback"></p>
+      </section>
+
+    </div>
+
+    <!-- ===== HISTORY VIEW (separate, hidden by default) ===== -->
+    <section id="history-box" style="display:none;">
+      <h2>Your Submission History</h2>
+      <div id="history-list"></div>
+      <button id="close-history-btn">Back to Practice</button>
+    </section>
+
+    <!-- ===== WEAK AREAS VIEW (separate, hidden by default) ===== -->
+    <section id="weak-areas-box" style="display:none;">
+      <h2>📈 Your Progress by Topic</h2>
+      <p id="weak-areas-summary"></p>
+      <div id="weak-areas-list"></div>
+      <button id="close-weak-areas-btn">Back to Practice</button>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
