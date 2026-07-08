@@ -135,4 +135,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 👤 Author
 
-Built by **Logesh** as a full-stack learning project.
+Built by **MANIKANDAN S** as a full-stack learning project.
