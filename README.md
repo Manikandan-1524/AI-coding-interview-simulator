@@ -20,9 +20,9 @@ Most practice platforms give you a fixed question bank and a pass/fail judge. Th
 ## 🖼️ Screenshots
 
 <!-- Add your screenshots here after pushing. Example: -->
-<!-- ![Practice View](docs/screenshots/practice-view.png) -->
-<!-- ![Interviewer Follow-Up](docs/screenshots/interviewer.png) -->
-<!-- ![Weak Areas](docs/screenshots/weak-areas.png) -->
+ ![Practice View](docs/screenshots/practice-view.png)
+![Interviewer Follow-Up](docs/screenshots/interviewer.png) 
+![Weak Areas](docs/screenshots/interviewer.png)
 
 ---
 
