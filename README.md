@@ -147,7 +147,7 @@ User submits code
 
 ---
 
-<div align="center">
+
 
 ## 📁 Project Structure
 
@@ -176,7 +176,7 @@ ai-coding-interview-simulator/
 └── README.md
 ```
 
-</div>
+
 
 ---
 
