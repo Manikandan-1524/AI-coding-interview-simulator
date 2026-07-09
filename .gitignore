@@ -10,6 +10,31 @@ Thumbs.db
 # ===== Backend (Java/Maven) =====
 backend/target/
 backend/src/main/resources/application.properties
+backend/src/main/resources/application-*.properties
+backend/.env
+backend/.classpath
+backend/.project
+backend/.settings/
+
+# ===== Frontend (Node) =====
+frontend/node_modules/
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+frontend/dist/
+frontend/build/
+
+# ===== Environment & Secrets =====
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets/
+credentials/
 
 # ===== Logs =====
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
