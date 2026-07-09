@@ -1,23 +1,14 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
-  "services": {
-    "backend": {
-      "builder": "nixpacks",
-      "buildCommand": "cd backend && mvn clean package -DskipTests",
-      "startCommand": "cd backend && java -Dspring.profiles.active=production -Dserver.port=$PORT -jar target/backend-*.jar",
-      "healthcheckPath": "/api/health",
-      "envVars": {
-        "SPRING_PROFILES_ACTIVE": "production",
-        "PORT": "8080",
-        "JAVA_TOOL_OPTIONS": "-Xmx512m -Xms256m -Dspring.profiles.active=production",
-        "CORS_ALLOWED_ORIGINS": "http://localhost:3000"
-      }
-    },
-    "database": {
-      "name": "PostgreSQL",
-      "type": "postgres",
-      "plan": "free"
-    }
+  "build": {
+    "builder": "nixpacks",
+    "buildCommand": "cd backend && mvn clean package -DskipTests"
+  },
+  "deploy": {
+    "startCommand": "cd backend && java -Dspring.profiles.active=production -Dserver.port=$PORT -jar target/backend-*.jar",
+    "healthcheckPath": "/api/health",
+    "restartPolicyType": "on_failure",
+    "restartPolicyMaxRetries": 5
   }
 }
 
