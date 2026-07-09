@@ -2,14 +2,14 @@
   "$schema": "https://railway.app/railway.schema.json",
   "services": {
     "backend": {
-      "builder": "railpack",
+      "builder": "nixpacks",
       "buildCommand": "cd backend && mvn clean package -DskipTests",
       "startCommand": "cd backend && java -Dspring.profiles.active=production -Dserver.port=$PORT -jar target/backend-*.jar",
       "healthcheckPath": "/api/health",
       "envVars": {
         "SPRING_PROFILES_ACTIVE": "production",
         "PORT": "8080",
-        "JAVA_OPTS": "-Xmx512m -Xms256m"
+        "JAVA_TOOL_OPTIONS": "-Xmx512m -Xms256m -Dspring.profiles.active=production"
       }
     },
     "database": {
@@ -42,6 +42,23 @@
     "DB_PASSWORD": {
       "description": "Database password (auto-set by Railway)",
       "isSecret": true
+    },
+    "DB_DRIVER": {
+      "description": "Database driver class",
+      "default": "org.postgresql.Driver"
+    },
+    "HIBERNATE_DIALECT": {
+      "description": "Hibernate dialect for database",
+      "default": "org.hibernate.dialect.PostgreSQL10Dialect"
+    },
+    "HIBERNATE_DDL": {
+      "description": "Hibernate DDL strategy",
+      "default": "create-drop"
+    },
+    "DB_POOL_SIZE": {
+      "description": "Database connection pool size",
+      "default": "5"
     }
   }
 }
+
