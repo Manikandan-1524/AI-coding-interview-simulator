@@ -3,7 +3,7 @@
 // e.g., const API_BASE_URL = "https://your-backend.up.railway.app/api";
 const API_BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
   ? "http://localhost:8080/api" 
-  : "https://your-backend.up.railway.app/api"; // UPDATE THIS BEFORE DEPLOYMENT!
+  : "https://ai-coding-interview-simulator-production.up.railway.app/api";
 
 // ===== Elements =====
 const authBox = document.getElementById("auth-box");
