@@ -1,3 +1,10 @@
+// ===== Configuration =====
+// Change this to your deployed backend URL when deploying to Vercel/Railway
+// e.g., const API_BASE_URL = "https://your-backend.up.railway.app/api";
+const API_BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
+  ? "http://localhost:8080/api" 
+  : "https://your-backend.up.railway.app/api"; // UPDATE THIS BEFORE DEPLOYMENT!
+
 // ===== Elements =====
 const authBox = document.getElementById("auth-box");
 const authTitle = document.getElementById("auth-title");
@@ -111,7 +118,7 @@ authSubmitBtn.addEventListener("click", async () => {
   const endpoint = isSignupMode ? "signup" : "login";
 
   try {
-    const response = await fetch(`http://localhost:8080/${endpoint}`, {
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password })
@@ -181,7 +188,7 @@ newQuestionBtn.addEventListener("click", async () => {
   followupFeedback.textContent = "";
 
   try {
-    const response = await fetch(`http://localhost:8080/generate-question?topic=${topic}`);
+    const response = await fetch(`${API_BASE_URL}/generate-question?topic=${topic}`);
     const data = await response.json();
 
     questionText.textContent = data.questionText;
@@ -220,7 +227,7 @@ submitBtn.addEventListener("click", async () => {
   resultText.innerHTML = '<span class="loading-spinner"></span>Running tests and getting AI feedback...';
 
   try {
-    const response = await fetch("http://localhost:8080/submit", {
+    const response = await fetch(`${API_BASE_URL}/submit`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -274,7 +281,7 @@ async function getFollowUpQuestion(questionTextValue, codeValue) {
   followupAnswer.value = "";
 
   try {
-    const response = await fetch("http://localhost:8080/follow-up", {
+    const response = await fetch(`${API_BASE_URL}/follow-up`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -303,7 +310,7 @@ followupSubmitBtn.addEventListener("click", async () => {
   followupFeedback.innerHTML = '<span class="loading-spinner"></span>Evaluating your answer...';
 
   try {
-    const response = await fetch("http://localhost:8080/follow-up-answer", {
+    const response = await fetch(`${API_BASE_URL}/follow-up-answer`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -331,7 +338,7 @@ historyLink.addEventListener("click", async (e) => {
   showHistoryView();
 
   try {
-    const response = await fetch(`http://localhost:8080/history/${username}`);
+    const response = await fetch(`${API_BASE_URL}/history/${username}`);
     const submissions = await response.json();
 
     if (submissions.length === 0) {
@@ -366,7 +373,7 @@ weakAreasLink.addEventListener("click", async (e) => {
   showWeakAreasView();
 
   try {
-    const response = await fetch(`http://localhost:8080/weak-areas/${username}`);
+    const response = await fetch(`${API_BASE_URL}/weak-areas/${username}`);
     const data = await response.json();
 
     weakAreasSummary.textContent = "💬 " + data.aiSummary;
