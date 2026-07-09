@@ -10,7 +10,6 @@ Thumbs.db
 # ===== Backend (Java/Maven) =====
 backend/target/
 backend/src/main/resources/application.properties
-backend/src/main/resources/application-*.properties
 backend/.env
 backend/.classpath
 backend/.project

@@ -1,0 +1,161 @@
+# Railway Setup Instructions - FIX FOR DATABASE CONNECTION ERROR
+
+## Problem Fixed:
+- ❌ Was: MySQL driver missing, PostgreSQL configuration missing
+- ✅ Now: Added PostgreSQL driver, production profile configured
+
+## Files Updated:
+1. `pom.xml` - Added PostgreSQL driver
+2. `application.properties` - Local MySQL configuration
+3. `application-production.properties` - Railway PostgreSQL configuration ⭐ NEW
+4. `railway.json` - Updated to use production profile
+
+---
+
+## 🚀 Steps to Fix Your Railway Deployment:
+
+### Step 1: Restart/Redeploy on Railway
+
+1. Go to **Railway Dashboard** → Your Project → **Backend** service
+2. Click **"Deploy"** button to rebuild with new code
+3. Wait 5-10 minutes for rebuild and redeploy
+4. Check **Logs** tab for deployment progress
+
+### Step 2: Verify PostgreSQL Database is Running
+
+1. In Railway project, check you have **PostgreSQL** service running (green status)
+2. If NOT present, click **"+ New"** → **"Database"** → **"PostgreSQL"**
+3. Wait 1-2 minutes for database to initialize
+
+### Step 3: Verify Environment Variables in Railway
+
+Click **Backend** service → **Variables** tab → Verify these are set:
+
+```
+✅ GROQ_API_KEY = [your actual key]
+✅ GEMINI_API_KEY = [your actual key]
+✅ PORT = 8080
+✅ SPRING_PROFILES_ACTIVE = production
+✅ CORS_ALLOWED_ORIGINS = https://your-vercel-url.vercel.app,http://localhost:3000
+
+AUTO-PROVIDED BY RAILWAY (don't add):
+✅ DATABASE_URL = [auto-set by PostgreSQL service]
+✅ DB_USERNAME = [auto-set by PostgreSQL service]
+✅ DB_PASSWORD = [auto-set by PostgreSQL service]
+```
+
+### Step 4: Check the Database Connection
+
+The production profile now:
+- Uses PostgreSQL driver (org.postgresql.Driver)
+- Reads DATABASE_URL environment variable
+- Automatically creates/updates tables on startup
+- Has proper connection pooling
+
+### Step 5: Monitor Logs
+
+1. Backend service → **Logs** tab
+2. Watch for this message:
+   ```
+   Tomcat started on port(s): 8080 (http)
+   ```
+3. If you see database connection errors, check:
+   - DATABASE_URL is set by Railway
+   - PostgreSQL service is running
+   - Network connectivity between services
+
+---
+
+## 📋 Complete Variable Setup in Railway
+
+Go to Backend service → Variables tab and ensure ALL of these are set:
+
+| Variable | Value | Status |
+|----------|-------|--------|
+| GROQ_API_KEY | `gsk_KqCZ4D2...` | ⚠️ MUST SET |
+| GEMINI_API_KEY | `AQ.Ab8RN6K...` | ⚠️ MUST SET |
+| PORT | `8080` | ⚠️ MUST SET |
+| SPRING_PROFILES_ACTIVE | `production` | ⚠️ MUST SET |
+| CORS_ALLOWED_ORIGINS | Your Vercel URL | ⚠️ MUST SET |
+| DATABASE_URL | (auto-set) | ✅ AUTO |
+| DB_USERNAME | (auto-set) | ✅ AUTO |
+| DB_PASSWORD | (auto-set) | ✅ AUTO |
+
+---
+
+## 🔍 Troubleshooting
+
+### Still getting "Failed to configure a DataSource" error?
+
+**Solution:**
+1. Verify PostgreSQL service status is **Running** (green)
+2. Verify **DATABASE_URL** shows actual connection string in Variables tab
+3. If not present, add Database manually:
+   - Click **"+ New"** → **"Database"** → **"PostgreSQL"**
+   - Railway auto-populates DATABASE_URL
+4. Redeploy backend service
+5. Check logs again
+
+### Getting "Connection refused" errors?
+
+**Solution:**
+1. This means DATABASE_URL format is wrong
+2. It should look like: `postgresql://user:password@host:5432/db_name`
+3. Check that PostgreSQL service is Running
+4. Wait 2-3 minutes after creating database for it to fully initialize
+
+### Application starts but can't insert data?
+
+**Solution:**
+1. Check permissions on PostgreSQL database
+2. Verify `spring.jpa.hibernate.ddl-auto=create-drop` in production profile
+3. Check logs for Hibernate errors
+4. Verify database tables are being created
+
+---
+
+## ✅ What Changed:
+
+### Before (Error):
+```properties
+# Tried to use MySQL with no driver on Railway
+spring.datasource.url=${DATABASE_URL:jdbc:mysql://localhost:3306/...}
+spring.datasource.driver-class-name=${DB_DRIVER:com.mysql.cj.jdbc.Driver}
+```
+
+### After (Fixed):
+```properties
+# Uses PostgreSQL driver and explicit configuration
+spring.datasource.url=${DATABASE_URL}
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.database=postgresql
+```
+
+---
+
+## 📞 Expected Timeline:
+
+1. Code push → GitHub: **1-2 minutes**
+2. Railway detects changes: **1 minute**
+3. Maven build: **3-5 minutes**
+4. Docker build: **1-2 minutes**
+5. Deploy: **1-2 minutes**
+6. **Total: ~8-12 minutes to see fix**
+
+Then check the Logs tab to verify it's running!
+
+---
+
+## 🎯 Expected Success Logs:
+
+After deployment, you should see in Logs tab:
+
+```
+...
+o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http)
+c.a.backend.BackendApplication           : Started BackendApplication
+```
+
+NO ERROR messages = SUCCESS! ✅
+
+Your backend is now running on Railway with PostgreSQL!

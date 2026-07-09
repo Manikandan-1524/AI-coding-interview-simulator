@@ -4,14 +4,12 @@
     "backend": {
       "builder": "railpack",
       "buildCommand": "cd backend && mvn clean package -DskipTests",
-      "startCommand": "cd backend && java -Dserver.port=$PORT -jar target/backend-*.jar",
+      "startCommand": "cd backend && java -Dspring.profiles.active=production -Dserver.port=$PORT -jar target/backend-*.jar",
       "healthcheckPath": "/api/health",
-      "domains": {
-        "web": "https://ai-coding-backend-prod.railway.app"
-      },
       "envVars": {
         "SPRING_PROFILES_ACTIVE": "production",
-        "PORT": "8080"
+        "PORT": "8080",
+        "JAVA_OPTS": "-Xmx512m -Xms256m"
       }
     },
     "database": {
@@ -30,8 +28,20 @@
       "isSecret": true
     },
     "CORS_ALLOWED_ORIGINS": {
-      "description": "Comma-separated list of allowed origins",
+      "description": "Comma-separated list of allowed origins for CORS",
       "default": "http://localhost:3000"
+    },
+    "DATABASE_URL": {
+      "description": "PostgreSQL connection string (auto-set by Railway)",
+      "isSecret": true
+    },
+    "DB_USERNAME": {
+      "description": "Database username (auto-set by Railway)",
+      "isSecret": true
+    },
+    "DB_PASSWORD": {
+      "description": "Database password (auto-set by Railway)",
+      "isSecret": true
     }
   }
 }
